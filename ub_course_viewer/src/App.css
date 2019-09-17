@@ -31,3 +31,13 @@
     transform: rotate(360deg);
   }
 }
+
+#courseSearchForm {
+	width: 80%;
+	margin: auto;
+	padding: 1%;
+}
+
+#courseSearchFormSubmitButton {
+	background-color: #005bbb;
+}
