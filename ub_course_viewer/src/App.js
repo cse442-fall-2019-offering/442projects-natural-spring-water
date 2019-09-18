@@ -6,6 +6,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function App() {
 	return(
@@ -26,7 +29,25 @@ function App() {
                      </Accordion.Toggle>
              
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body>Test</Card.Body>
+                        <Card.Body>
+							<Container>
+								<Row>
+									<Col sm={8}>Foundational material for further studies in computer science. Topics include logic, proofs, sets, functions, relations, recursion, recurrence relations, mathematical induction, graphs, trees, basic counting theory, regular languages, and context free grammars.</Col>
+									<Col sm={4}>
+										<Container>
+											<Row style={{marginBottom: 1}}> 
+												<Col> <Button type="submit">Topics</Button> </Col> 
+												<Col> <Button type="submit">Add</Button> </Col> 
+											</Row>
+											<Row style={{marginBottom: 1}}> 
+												<Col> <Button type="submit">Edit</Button> </Col> 
+												<Col> <Button type="submit">Open</Button> </Col> 
+											</Row>
+										</Container>
+									</Col>
+								</Row>
+							</Container>
+						</Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
@@ -37,7 +58,25 @@ function App() {
                      </Accordion.Toggle>
              
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body>Test</Card.Body>
+                        <Card.Body>
+							<Container>
+								<Row>
+									<Col sm={8}>Provides a rigorous analysis of the design, implementation, and properties of advanced data structures. Topics include time-space analysis and tradeoffs in arrays, vectors, lists, stacks, queues, and heaps; tree and graph algorithms and traversals, hashing, sorting, and data structures on secondary storage. Surveys library implementations of basic data structures in a high-level language. Advanced data structure implementations are studied in detail. Illustrates the importance of choosing appropriate data structures when solving a problem by programming projects in a high-level language.</Col>
+									<Col sm={4}>
+										<Container>
+											<Row style={{marginBottom: 1}}> 
+												<Col> <Button type="submit">Topics</Button> </Col> 
+												<Col> <Button type="submit">Add</Button> </Col> 
+											</Row>
+											<Row style={{marginBottom: 1}}> 
+												<Col> <Button type="submit">Edit</Button> </Col> 
+												<Col> <Button type="submit">Open</Button> </Col> 
+											</Row>
+										</Container>
+									</Col>
+								</Row>
+							</Container>
+						</Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
