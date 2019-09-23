@@ -71,7 +71,7 @@ function App() {
 
 						}
 					>
-					<Button id = "cart" controlId = "cart" variant="secondary"> Cart (0) </Button>
+					<Button id = "cart" controlId = "cart" variant="secondary"> Cart (5) </Button>
 					</OverlayTrigger>
 				</Form.Group>
 			</Form>
