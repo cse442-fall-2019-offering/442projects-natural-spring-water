@@ -33,11 +33,20 @@
 }
 
 #courseSearchForm {
-	width: 80%;
+	width: 60%;
 	margin: auto;
-	padding: 1%;
+	padding-top: 1%;
+	padding-bottom: 1%;
 }
 
 #courseSearchFormSubmitButton {
 	background-color: #005bbb;
+}
+
+#courseSearchLabel {
+	padding-left: 1%;
+}
+
+#cart {
+	margin-left: 1%;
 }
