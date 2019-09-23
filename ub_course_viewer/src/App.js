@@ -3,6 +3,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Form from 'react-bootstrap/Form';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
@@ -63,18 +64,19 @@ function App() {
 								<Row>
 									<Col sm={8}>Foundational material for further studies in computer science. Topics include logic, proofs, sets, functions, relations, recursion, recurrence relations, mathematical induction, graphs, trees, basic counting theory, regular languages, and context free grammars.</Col>
 									<Col sm={4}>
-										<Container>
-											<Row style={{marginBottom: 1}}>
-												<Col> <Button type="submit">Topics</Button> </Col>
-												<Col> <Button type="submit">Add</Button> </Col>
-											</Row>
-											<Row style={{marginBottom: 1}}>
-												<Col> <Button type="submit">Edit</Button> </Col>
-												<Col> <Button type="submit">Open</Button> </Col>
-											</Row>
-										</Container>
 									</Col>
 								</Row>
+								<p> </p>
+								<Container>
+									<Row style={{marginBottom: 1}}>
+										<ButtonGroup>
+											<Button variant = "outline-primary" type="submit">Topics</Button>
+											<Button variant = "outline-primary" type="submit">Add</Button>
+											<Button variant = "outline-primary" type="submit">Edit</Button>
+											<Button variant = "outline-primary" type="submit">Open</Button>
+										</ButtonGroup>
+									</Row>
+								</Container>
 							</Container>
 						</Card.Body>
                     </Accordion.Collapse>
@@ -92,23 +94,25 @@ function App() {
 								<Row>
 									<Col sm={8}>Provides a rigorous analysis of the design, implementation, and properties of advanced data structures. Topics include time-space analysis and tradeoffs in arrays, vectors, lists, stacks, queues, and heaps; tree and graph algorithms and traversals, hashing, sorting, and data structures on secondary storage. Surveys library implementations of basic data structures in a high-level language. Advanced data structure implementations are studied in detail. Illustrates the importance of choosing appropriate data structures when solving a problem by programming projects in a high-level language.</Col>
 									<Col sm={4}>
-										<Container>
-											<Row style={{marginBottom: 1}}>
-												<Col> <Button type="submit">Topics</Button> </Col>
-												<Col> <Button type="submit">Add</Button> </Col>
-											</Row>
-											<Row style={{marginBottom: 1}}>
-												<Col> <Button type="submit">Edit</Button> </Col>
-												<Col> <Button type="submit">Open</Button> </Col>
-											</Row>
-										</Container>
 									</Col>
 								</Row>
+								<p> </p>
+								<Container>
+										<Row style={{marginBottom: 1}}>
+											<ButtonGroup>
+												<Button variant = "outline-primary" type="submit">Topics</Button>
+												<Button variant = "outline-primary" type="submit">Add</Button>
+												<Button variant = "outline-primary" type="submit">Edit</Button>
+												<Button variant = "outline-primary" type="submit">Open</Button>
+											</ButtonGroup>
+										</Row>
+									</Container>
 							</Container>
 						</Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
+			
 		</div>
     );
 }
