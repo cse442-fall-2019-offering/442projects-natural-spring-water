@@ -12,7 +12,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Search from "./Search";
+import Search from "./landingPage/Search";
+import CourseElement from "./landingPage/CourseElement"
 
 function App() {
 	return(
@@ -21,66 +22,8 @@ function App() {
 
 			<Search></Search>
 
-			<Accordion defaultActiveKey="0">
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                        CSE 191
-                     </Accordion.Toggle>
-
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-							<Container>
-								<Row>
-									<Col sm={8}>Foundational material for further studies in computer science. Topics include logic, proofs, sets, functions, relations, recursion, recurrence relations, mathematical induction, graphs, trees, basic counting theory, regular languages, and context free grammars.</Col>
-									<Col sm={4}>
-									</Col>
-								</Row>
-								<p> </p>
-								<Container>
-									<Row style={{marginBottom: 1}}>
-										<ButtonGroup>
-											<Button variant = "outline-primary" type="submit">Topics</Button>
-											<Button variant = "outline-primary" type="submit">Add</Button>
-											<Button variant = "outline-primary" type="submit">Edit</Button>
-											<Button variant = "outline-primary" type="submit">Open</Button>
-										</ButtonGroup>
-									</Row>
-								</Container>
-							</Container>
-						</Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion>
-			<Accordion defaultActiveKey="0">
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                        CSE 250
-                     </Accordion.Toggle>
-
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-							<Container>
-								<Row>
-									<Col sm={8}>Provides a rigorous analysis of the design, implementation, and properties of advanced data structures. Topics include time-space analysis and tradeoffs in arrays, vectors, lists, stacks, queues, and heaps; tree and graph algorithms and traversals, hashing, sorting, and data structures on secondary storage. Surveys library implementations of basic data structures in a high-level language. Advanced data structure implementations are studied in detail. Illustrates the importance of choosing appropriate data structures when solving a problem by programming projects in a high-level language.</Col>
-									<Col sm={4}>
-									</Col>
-								</Row>
-								<p> </p>
-								<Container>
-										<Row style={{marginBottom: 1}}>
-											<ButtonGroup>
-												<Button variant = "outline-primary" type="submit">Topics</Button>
-												<Button variant = "outline-primary" type="submit">Add</Button>
-												<Button variant = "outline-primary" type="submit">Edit</Button>
-												<Button variant = "outline-primary" type="submit">Open</Button>
-											</ButtonGroup>
-										</Row>
-									</Container>
-							</Container>
-						</Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion>
+			<CourseElement name="CSE 191" summary="Foundational material for further studies in computer science. Topics include logic, proofs, sets, functions, relations, recursion, recurrence relations, mathematical induction, graphs, trees, basic counting theory, regular languages, and context free grammars."></CourseElement>
+			<CourseElement name="CSE 250" summary="Provides a rigorous analysis of the design, implementation, and properties of advanced data structures. Topics include time-space analysis and tradeoffs in arrays, vectors, lists, stacks, queues, and heaps; tree and graph algorithms and traversals, hashing, sorting, and data structures on secondary storage. Surveys library implementations of basic data structures in a high-level language. Advanced data structure implementations are studied in detail. Illustrates the importance of choosing appropriate data structures when solving a problem by programming projects in a high-level language."></CourseElement>
 			
 		</div>
     );
