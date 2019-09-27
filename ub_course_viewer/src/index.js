@@ -6,7 +6,7 @@ import App from './App';
 import Core from './core/Core'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render( < Core / > , document.getElementById('root'));
+ReactDOM.render( < App / > , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
