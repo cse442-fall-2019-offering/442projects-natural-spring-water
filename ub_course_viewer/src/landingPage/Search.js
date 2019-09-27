@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
+// Search Bar
+// Contains the search bar, cart, and teacher login button
+
 function Search() {
     return (
         <div>

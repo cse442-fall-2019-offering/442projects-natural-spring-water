@@ -9,6 +9,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+//CourseElement
+// classProps is the parameter that takes in values for the name of the class and class summary
+//basic layout for a course element on the landing page
 
 function CourseElement (classProps) {
     return (
