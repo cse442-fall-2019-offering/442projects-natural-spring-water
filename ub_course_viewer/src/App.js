@@ -4,9 +4,10 @@ import './App.css';
 import Search from "./landingPage/Search";
 import CourseElement from "./landingPage/CourseElement"
 
+// Currently the landing page that holds the Search and courseElement components
+
 function App() {
 	return(
-		//Search Bar
 		<div>
 
 			<Search></Search>
