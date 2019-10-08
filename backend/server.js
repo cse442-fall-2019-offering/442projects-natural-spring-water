@@ -8,7 +8,7 @@ const app = express();
 
 const connection = mysql.createConnection({
     host: 'tethys.cse.buffalo.edu',
-    user: 'wwong9@cheshire.cse.buffalo.edu',
+    user: 'wwong9',
     password: '50193191',
     database: 'cse442_542_2019_fall_teamn_db'
 });
