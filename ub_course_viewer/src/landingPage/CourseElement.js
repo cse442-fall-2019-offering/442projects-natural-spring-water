@@ -36,7 +36,7 @@ function CourseElement (classProps) {
 											<Button variant = "outline-primary" type="submit">Topics</Button>
 											<Button variant = "outline-primary" type="submit">Add</Button>
 											<Button variant = "outline-primary" type="submit">Edit</Button>
-											<Button variant = "outline-primary" type="submit">Open</Button>
+											<Button href = "/graph" variant = "outline-primary" type="submit">Open</Button>
 										</ButtonGroup>
 									</Row>
 								</Container>
