@@ -9,7 +9,7 @@ class Cart extends Component {
 
 
 		return(
-			<OverlayTrigger onExit={()=>{this.remove_rendered_courses()}} onEntered={()=>{this.render_courses()}} placement="bottom" trigger="click" key="right"
+			<OverlayTrigger onEntering={()=>{this.render_courses()}} placement="bottom" trigger="click" key="right"
 				overlay={
 					<Popover id={"popover-positioned-bottom"}>
 						<Popover.Title>
@@ -34,10 +34,10 @@ class Cart extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = {courses: props.shop_cart.get_courses()};
+		this.state = {courses: props.shop_cart.get_courses(), shop_cart_list: props.shop_cart};
 		this.print_classes = this.print_classes.bind(this);
 		this.render_courses = this.render_courses.bind(this);
-		this.remove_rendered_courses = this.remove_rendered_courses.bind(this);
+		this.remove_course = this.remove_course.bind(this);
 	}
 
 	print_classes(){
@@ -48,24 +48,45 @@ class Cart extends Component {
 		console.log("Cart.js: render_courses()");
 		var unordered_list = document.getElementById("my_ui_cart_id");
 		this.state.courses.forEach(element => {
-			var node = document.createElement("LI");
-			var textnode = document.createTextNode(element);
-			var att = document.createAttribute("class");
-			att.value = "list-group-item";
-			node.appendChild(textnode);
-			node.setAttributeNode(att);
-			unordered_list.appendChild(node);
+			var isListed = false;
+			var i;
+			console.log(unordered_list)
+			for(i = 0; i < unordered_list.length; i++) {
+				if(unordered_list[i].getAttribute("id").equals(element)) {
+					console.log(unordered_list)
+					isListed = true;
+					break;
+				}
+			}
+			
+			if(isListed === false) {
+				var node = document.createElement("LI");
+				var textnode = document.createTextNode(element);
+				var att = document.createAttribute("class");
+				att.value = "list-group-item";
+				node.setAttribute("id", element); 
+				node.onclick = ()=>{this.remove_course(element)};
+				node.appendChild(textnode);
+				node.setAttributeNode(att);
+				unordered_list.appendChild(node);
+			}
 		});
 	}
-
-	remove_rendered_courses(){
-		console.log("Cart.js: remove_rendered_courses()");
-		var list = document.getElementById("my_ui_cart_id");
-		while(list.length > 0){
-			list.removeChild(list.childNodes[0]);
+	
+	remove_course(element) {
+		// Pass remove request to backend
+		this.state.shop_cart_list.remove_course(element);
+		console.log(this.state.courses);
+		
+		// Remove in UI
+		var unordered_list = document.getElementById("my_ui_cart_id");
+		console.log(unordered_list.childNodes);
+		for(var i = 0; i < unordered_list.childNodes.length; i++) {
+			if(unordered_list.childNodes[i].id === element) {
+				unordered_list.removeChild(unordered_list.childNodes[i]);
+			}
 		}
 	}
-
 
 }
 
