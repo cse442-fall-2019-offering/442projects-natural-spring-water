@@ -43,30 +43,6 @@ function Search() {
 					<Form.Label id="courseSearchLabel">Course Search</Form.Label>
 					<Form.Control type="course" placeholder="Enter Department and Course Number" />
 					<Button variant="primary" type="submit" id="courseSearchFormSubmitButton">Search</Button>
-					
-					<OverlayTrigger placement="bottom" trigger="click" key="right"
-						overlay={
-							<Popover id={"popover-positioned-bottom"}>
-								<Popover.Title>
-									<ul class="list-group">
-									  <li class="list-group-item">CSE 191</li>
-									  <li class="list-group-item">CSE 250</li>
-									  <li class="list-group-item">CSE 331</li>
-									  <li class="list-group-item">CSE 474</li>
-									  <li class="list-group-item">CSE 115</li>
-									</ul>
-								</Popover.Title>
-								<Popover.Content>
-									<Button variant="primary" type="submit">
-										Open
-									</Button>
-								</Popover.Content>
-							</Popover>
-
-						}
-					>
-					<Button id = "cart" controlId = "cart" variant="secondary"> Cart (5) </Button>
-					</OverlayTrigger>
 				</Form.Group>
 			</Form>
         </div>
