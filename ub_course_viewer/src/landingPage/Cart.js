@@ -43,7 +43,7 @@ class Cart extends Component {
 	print_classes(){
 		console.log("Cart.js: print_classes() " + this.state.courses);
 	}
-
+	// hello
 	render_courses(){
 		console.log("Cart.js: render_courses()");
 		var unordered_list = document.getElementById("my_ui_cart_id");
