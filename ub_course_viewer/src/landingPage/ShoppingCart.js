@@ -23,17 +23,17 @@ class ShoppingCart extends Component {
 	
 	remove_course(courseCode) {
 		var index;
-		var i;
+		// var i;
 		
-		index = -1;
-		for(i = 0; i < this.state.course_list.length; i++) {
-			console.log("ShoppingCart.js : remove_course() : courseCode : " + courseCode);
-			console.log("ShoppingCart.js : remove_course() : courseInList : " + this.state.course_list[i]);
-			if(courseCode === this.state.course_list[i]) {
-				index = i;
-				break;
-			}
-		}
+		index = this.state.course_list.indexOf(courseCode);
+		// for(i = 0; i < this.state.course_list.length; i++) {
+		// 	console.log("ShoppingCart.js : remove_course() : courseCode : " + courseCode);
+		// 	console.log("ShoppingCart.js : remove_course() : courseInList : " + this.state.course_list[i]);
+		// 	if(courseCode === this.state.course_list[i]) {
+		// 		index = i;
+		// 		break;
+		// 	}
+		// }
 		
 		console.log("ShoppingCart.js : remove_course() : index " + index)
 		if(index !== -1) {

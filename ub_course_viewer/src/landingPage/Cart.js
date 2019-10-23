@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import cartFunc from "./cartFunctions"
 
 class Cart extends Component {
 	render(){
@@ -34,10 +35,12 @@ class Cart extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = {courses: props.shop_cart.get_courses(), shop_cart_list: props.shop_cart};
+		this.state = {courses: props.shop_cart};
 		this.print_classes = this.print_classes.bind(this);
 		this.render_courses = this.render_courses.bind(this);
 		this.remove_course = this.remove_course.bind(this);
+		this.render_courses();
+		this.print_classes();
 	}
 
 	print_classes(){
@@ -75,7 +78,7 @@ class Cart extends Component {
 	
 	remove_course(element) {
 		// Pass remove request to backend
-		this.state.shop_cart_list.remove_course(element);
+		cartFunc.remove_course(element,this.state.courses);
 		console.log(this.state.courses);
 		
 		// Remove in UI
