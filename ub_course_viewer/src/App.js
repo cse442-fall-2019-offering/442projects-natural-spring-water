@@ -11,7 +11,8 @@ class App extends Component {
 		my_shopping_cart: [],
 		showLandingPage: true,
 		showCore: true,
-		myAPIResponse: []
+		myAPIResponse: [],
+		searchString: ""
 	}
 
 	add_course = (courseCode) => {
@@ -53,8 +54,16 @@ class App extends Component {
 		this.callAPI();
 	}
 
-	getAPI = () => {
+	getCourseResults = () => {
 		return this.state.myAPIResponse;
+	}
+
+	checkSearchString = (courseNum) => {
+		return true;
+	}
+
+	updateSearchString = (newSearch) => {
+		this.setState({searchString: newSearch});
 	}
 
 	render() {
@@ -62,7 +71,7 @@ class App extends Component {
 			<div>
 				{ 
 					this.state.showLandingPage ?
-						<LandingPage onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getAPI()}></LandingPage> : null
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} searchString={this.state.searchString}></LandingPage> : null
 				}
 				{ 
 					this.state.showCore ? 

@@ -11,11 +11,11 @@ function LandingPage(props) {
 	return(
         <div>
 
-            <Search></Search>
+            <Search onSearch={props.onSearch}></Search>
 
             <Cart cart={props.cart} onRemove={props.onRemove}></Cart>
             {props.courses.map(course => {
-                return <CourseElement name={course.code+" - "+course.title} summary={course.summary} onAdd={props.onAdd}/>
+                return <CourseElement name={course.code+" - "+course.title} summary={course.summary} onAdd={props.onAdd} searchString={props.searchString}/>
             })}
 
             
