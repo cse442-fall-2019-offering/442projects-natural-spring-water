@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import cartFunc from './cartFunctions'
+import cartFunc from './CartFunctions'
 
 //CourseElement
 // classProps is the parameter that takes in values for the name of the class and class summary
