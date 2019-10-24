@@ -12,7 +12,9 @@ class App extends Component {
 		showLandingPage: true,
 		showCore: true,
 		graph_viewer: [],
-		myAPIResponse: []
+		myAPIResponse: [],
+		searchString: "",
+		selectedCourse:{}
 	}
 
 	add_course = (courseCode) => {
@@ -59,16 +61,31 @@ class App extends Component {
 		this.callAPI();
 	}
 
+	getCourseResults = () => {
+		return this.state.myAPIResponse;
+	}
+
+	checkSearchString = (courseNum) => {
+		return true;
+	}
+
+	updateSearchString = (newSearch) => {
+		this.setState({searchString: newSearch});
+	}
+
+	openCourse = (course) =>{
+		this.setState({selectedCourse:course});
+	}
 	render() {
 		return(
 			<div>
 				{ 
 					this.state.showLandingPage ?
-						<LandingPage onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course}></LandingPage> : null
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
 				}
 				{ 
 					this.state.showCore ? 
-						<Core cart={this.state.my_shopping_cart}></Core>: null
+						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()}></Core>: null
 				}
 				<button onClick={()=>{console.log(this.state.myAPIResponse)}}>Backend</button>
 			</div>
