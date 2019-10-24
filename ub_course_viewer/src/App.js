@@ -11,7 +11,8 @@ class App extends Component {
 		my_shopping_cart: [],
 		showLandingPage: true,
 		showCore: true,
-		graph_viewer: []
+		graph_viewer: [],
+		myAPIResponse: []
 	}
 
 	add_course = (courseCode) => {
@@ -46,6 +47,17 @@ class App extends Component {
 		let cart = this.state.my_shopping_cart;
 		this.setState({graph_viewer: cart});
 	}
+	
+	callAPI() {
+	    fetch("http://localhost:9000/myAPI")
+	        .then(res => res.text())
+			.then(res => this.setState({ myAPIResponse: JSON.parse(res) }));
+			
+	}
+
+	componentWillMount() {
+		this.callAPI();
+	}
 
 	render() {
 		return(
@@ -58,9 +70,11 @@ class App extends Component {
 					this.state.showCore ? 
 						<Core cart={this.state.my_shopping_cart}></Core>: null
 				}
+				<button onClick={()=>{console.log(this.state.myAPIResponse)}}>Backend</button>
 			</div>
 		);
 	}
 }
+
 
 export default App;
