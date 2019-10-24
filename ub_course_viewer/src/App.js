@@ -3,22 +3,56 @@ import React, { Component} from 'react';
 import './App.css';
 import LandingPage from "./landingPage/LandingPage";
 import Core from "./core/Core"
-import { BrowserRouter } from 'react-router-dom';
-import { Route } from 'react-router-dom';
 
 // Currently the landing page that holds the Search and courseElement components
 
 class App extends Component {
 	state = {
-		my_shopping_cart: []
+		my_shopping_cart: [],
+		showLandingPage: true,
+		showCore: true
+	}
+
+	add_course = (courseCode) => {
+		//triple equals because console wouldnt shut the fuck up about it
+		let cart = this.state.my_shopping_cart;
+		if(cart.indexOf(courseCode) === -1){
+			cart.push(courseCode);
+			console.log("App.js: Added " + courseCode + " to cart which is now " + cart);
+		}
+		this.setState({my_shopping_cart: cart});
+	}
+
+	remove_course = (courseCode) => {
+		let cart = this.state.my_shopping_cart;
+		var index;
+		index = cart.indexOf(courseCode);
+		
+		console.log("App.js : remove_course() : index " + index)
+		if(index !== -1) {
+			cart.splice(index , 1);
+			console.log("App.js : remove_course() : Removed")
+		}
+		this.setState({my_shopping_cart: cart})
+	}
+
+	getCart = () => {
+		console.log(this.state.my_shopping_cart)
+		return this.state.my_shopping_cart;
 	}
 
 	render() {
 		return(
-			<BrowserRouter>
-				<Route path="/" exact render={() => <LandingPage cart={this.state.my_shopping_cart}></LandingPage>}/>
-				<Route path="/graph" exact render={() => <Core cart={this.state.my_shopping_cart}></Core>}/>
-			</BrowserRouter>
+			<div>
+				{ 
+					this.state.showLandingPage ?
+						<LandingPage onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course}></LandingPage> : null
+				}
+				{ 
+					this.state.showCore ? 
+						<Core cart={this.state.my_shopping_cart}></Core>: null
+				}
+			</div>
 		);
 	}
 }

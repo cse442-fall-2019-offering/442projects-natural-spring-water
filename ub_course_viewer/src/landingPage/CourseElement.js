@@ -8,7 +8,6 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import cartFunc from './CartFunctions'
 
 //CourseElement
 // classProps is the parameter that takes in values for the name of the class and class summary
@@ -35,9 +34,9 @@ function CourseElement (classProps) {
 									<Row style={{marginBottom: 1}}>
 										<ButtonGroup>
 											<Button variant = "outline-primary" type="submit">Topics</Button>
-											<Button variant = "outline-primary" onClick={ ()=>{cartFunc.add_course(classProps.name,classProps.cart)} } type="submit">Add</Button>
+											<Button variant = "outline-primary" onClick={ ()=>{classProps.onAdd(classProps.name)} } type="submit">Add</Button>
 											<Button variant = "outline-primary" type="submit">Edit</Button>
-											<Button href = "/graph" variant = "outline-primary" type="submit">Open</Button>
+											<Button variant = "outline-primary" type="submit">Open</Button>
 										</ButtonGroup>
 									</Row>
 								</Container>
