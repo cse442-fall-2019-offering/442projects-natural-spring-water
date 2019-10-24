@@ -1,25 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Search from '../landingPage/Search';
+import '../App.css';
+import Cart from "../landingPage/Cart"
 
-function Core(){
+let myGraph = {nodes:[{id:"n1", label:"CSE250"}, {id:"n2", label:"CSE191"}], edges:[{id:"e1",source:"n1",target:"n2",label:"SEES"}]};
+
+function Core(props){
     return (
-        <div>
-            <Container>
-                <Row>
-                    <Col xs={1}>Home Page Button</Col>
-                    <Col><Search></Search></Col>
-                </Row>
-                <Row>
-                    <Col>Course List</Col>
-                    <Col>Core Viewer</Col>
-                    <Col>Cart</Col>
-                </Row>
-            </Container>
-        </div>
+		<div>
+
+		</div>
     );
 }
 

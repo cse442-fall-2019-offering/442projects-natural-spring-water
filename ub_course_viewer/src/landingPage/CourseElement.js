@@ -34,7 +34,7 @@ function CourseElement (classProps) {
 									<Row style={{marginBottom: 1}}>
 										<ButtonGroup>
 											<Button variant = "outline-primary" type="submit">Topics</Button>
-											<Button variant = "outline-primary" type="submit">Add</Button>
+											<Button variant = "outline-primary" onClick={ ()=>{classProps.onAdd(classProps.name)} } type="submit">Add</Button>
 											<Button variant = "outline-primary" type="submit">Edit</Button>
 											<Button variant = "outline-primary" type="submit">Open</Button>
 										</ButtonGroup>
