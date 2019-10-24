@@ -53,12 +53,16 @@ class App extends Component {
 		this.callAPI();
 	}
 
+	getAPI = () => {
+		return this.state.myAPIResponse;
+	}
+
 	render() {
 		return(
 			<div>
 				{ 
 					this.state.showLandingPage ?
-						<LandingPage onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course}></LandingPage> : null
+						<LandingPage onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getAPI()}></LandingPage> : null
 				}
 				{ 
 					this.state.showCore ? 
