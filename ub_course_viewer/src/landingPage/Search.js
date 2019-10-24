@@ -5,11 +5,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Cart from './Cart';
 
 // Search Bar
 // Contains the search bar, cart, and teacher login button
 
-function Search() {
+function Search(props) {
     return (
         <div>
             <Form inline >
@@ -43,6 +44,7 @@ function Search() {
 					<Form.Label id="courseSearchLabel">Course Search</Form.Label>
 					<Form.Control type="course" placeholder="Enter Department and Course Number" />
 					<Button variant="primary" type="submit" id="courseSearchFormSubmitButton">Search</Button>
+					<Cart cart={props.cart} onRemove={props.onRemove}></Cart>
 				</Form.Group>
 			</Form>
         </div>

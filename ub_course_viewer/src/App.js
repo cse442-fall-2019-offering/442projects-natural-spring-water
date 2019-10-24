@@ -10,7 +10,8 @@ class App extends Component {
 	state = {
 		my_shopping_cart: [],
 		showLandingPage: true,
-		showCore: true
+		showCore: true,
+		graph_viewer: []
 	}
 
 	add_course = (courseCode) => {
@@ -39,6 +40,11 @@ class App extends Component {
 	getCart = () => {
 		console.log(this.state.my_shopping_cart)
 		return this.state.my_shopping_cart;
+	}
+
+	openGraph = () => {
+		let cart = this.state.my_shopping_cart;
+		this.setState({graph_viewer: cart});
 	}
 
 	render() {
