@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'cse442-root',
+    password: '',
     database: 'cse442_542_2019_fall_teamn_db',
 });
 
@@ -19,15 +19,15 @@ connection.connect(function(err){
 
 router.get("/", function(req, res, next) {
 	var my_result = [];
-	connection.query("SELECT code FROM courses", function (err, result, fields) {
+	connection.query("SELECT * FROM courses", function (err, result, fields) {
 		if(err){
 			console.log(err);
 			res.send("NO VALUES");
 		}else{
 			for (element of result){
-				my_result.push(element.code);
+				my_result.push(element);
 			}
-			res.send(my_result.toString());
+			res.send(my_result);
 		}
 	});
 });
