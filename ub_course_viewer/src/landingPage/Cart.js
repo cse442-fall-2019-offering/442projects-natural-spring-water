@@ -9,7 +9,7 @@ class Cart extends Component {
 
 
 		return(
-			<OverlayTrigger onEntering={()=>{}} placement="bottom" trigger="click" key="right"
+			<OverlayTrigger rootClose = "True" onEntering={()=>{}} placement="bottom" trigger="click" key="right"
 				overlay={
 					<Popover id={"popover-positioned-bottom"}>
 						<Popover.Title>

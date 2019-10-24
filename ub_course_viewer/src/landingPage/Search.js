@@ -14,7 +14,7 @@ function Search() {
         <div>
             <Form inline >
 				<Form.Group controlId="courseSearchForm" id="courseSearchForm">
-					<OverlayTrigger placement="bottom" trigger="click" key="left"
+					<OverlayTrigger rootClose = "True" placement="bottom" trigger="click" key="left"
 						overlay={
 							<Popover id={"popover-positioned-bottom"}>
 								<Popover.Title>
