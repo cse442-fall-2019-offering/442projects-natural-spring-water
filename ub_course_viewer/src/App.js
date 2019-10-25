@@ -1,22 +1,90 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { Component} from 'react';
 import './App.css';
-import Search from "./landingPage/Search";
-import CourseElement from "./landingPage/CourseElement"
+import LandingPage from "./landingPage/LandingPage";
+import Core from "./core/Core"
 
 // Currently the landing page that holds the Search and courseElement components
 
-function App() {
-	return(
-		<div>
+class App extends Component {
+	state = {
+		my_shopping_cart: [],
+		showLandingPage: true,
+		showCore: true,
+		graph_viewer: [],
+		myAPIResponse: [],
+		searchString: "",
+		selectedCourse:{}
+	}
 
-			<Search></Search>
+	add_course = (courseCode) => {
+		//triple equals because console wouldnt shut the fuck up about it
+		let cart = this.state.my_shopping_cart;
+		if(cart.indexOf(courseCode) === -1){
+			cart.push(courseCode);
+		}
+		this.setState({my_shopping_cart: cart});
+	}
 
-			<CourseElement name="CSE 191" summary="Foundational material for further studies in computer science. Topics include logic, proofs, sets, functions, relations, recursion, recurrence relations, mathematical induction, graphs, trees, basic counting theory, regular languages, and context free grammars."></CourseElement>
-			<CourseElement name="CSE 250" summary="Provides a rigorous analysis of the design, implementation, and properties of advanced data structures. Topics include time-space analysis and tradeoffs in arrays, vectors, lists, stacks, queues, and heaps; tree and graph algorithms and traversals, hashing, sorting, and data structures on secondary storage. Surveys library implementations of basic data structures in a high-level language. Advanced data structure implementations are studied in detail. Illustrates the importance of choosing appropriate data structures when solving a problem by programming projects in a high-level language."></CourseElement>
+	remove_course = (courseCode) => {
+		let cart = this.state.my_shopping_cart;
+		var index;
+		index = cart.indexOf(courseCode);
+		
+		console.log("App.js : remove_course() : index " + index)
+		if(index !== -1) {
+			cart.splice(index , 1);
+			console.log("App.js : remove_course() : Removed")
+		}
+		this.setState({my_shopping_cart: cart})
+	}
+
+	getCart = () => {
+		return this.state.my_shopping_cart;
+	}
+
+	openGraph = () => {
+		let cart = this.state.my_shopping_cart;
+		this.setState({graph_viewer: cart});
+	}
+	
+	callAPI() {
+	    fetch("http://localhost:9000/myAPI")
+	        .then(res => res.text())
+			.then(res => this.setState({ myAPIResponse: JSON.parse(res) }));
 			
-		</div>
-    );
+	}
+
+	componentWillMount() {
+		this.callAPI();
+	}
+
+	getCourseResults = () => {
+		return this.state.myAPIResponse;
+	}
+
+	updateSearchString = (newSearch) => {
+		this.setState({searchString: newSearch});
+	}
+
+	openCourse = (course) =>{
+		this.setState({selectedCourse:course});
+	}
+	render() {
+		return(
+			<div>
+				{ 
+					this.state.showLandingPage ?
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
+				}
+				{ 
+					this.state.showCore ? 
+						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()}></Core>: null
+				}
+			</div>
+		);
+	}
 }
+
 
 export default App;
