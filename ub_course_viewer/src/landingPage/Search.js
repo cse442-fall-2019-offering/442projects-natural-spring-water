@@ -23,7 +23,7 @@ class Search extends Component {
 	render() {
 		return (
 			<div>
-				<Form inline >
+				<Form inline>
 					<Form.Group controlId="courseSearchForm" id="courseSearchForm">
 						<OverlayTrigger placement="bottom" trigger="click" key="left"
 							overlay={
@@ -41,7 +41,7 @@ class Search extends Component {
 										</Form>
 									</Popover.Title>
 									<Popover.Content>
-										<Button variant="primary" type="submit">
+										<Button variant="primary" type="button">
 											Submit
 										</Button>
 									</Popover.Content>
@@ -54,8 +54,11 @@ class Search extends Component {
 						<Form.Label id="courseSearchLabel">Course Search</Form.Label>
 						<Form.Control type="course" placeholder="Enter Department and Course Number" onChange={event => this.onChangeSearchString(event.target.value)}/>
 						<Button variant="primary" type="button" id="courseSearchFormSubmitButton" onClick={()=>this.props.onSearch(this.state.searchString)} >Search</Button>
+						<Cart cart={this.props.cart} onRemove={this.props.onRemove}></Cart>
 					</Form.Group>
+					
 				</Form>
+				
 			</div>
 		);
 	} 

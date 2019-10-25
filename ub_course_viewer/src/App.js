@@ -22,7 +22,6 @@ class App extends Component {
 		let cart = this.state.my_shopping_cart;
 		if(cart.indexOf(courseCode) === -1){
 			cart.push(courseCode);
-			console.log("App.js: Added " + courseCode + " to cart which is now " + cart);
 		}
 		this.setState({my_shopping_cart: cart});
 	}
@@ -41,7 +40,6 @@ class App extends Component {
 	}
 
 	getCart = () => {
-		console.log(this.state.my_shopping_cart)
 		return this.state.my_shopping_cart;
 	}
 
@@ -65,10 +63,6 @@ class App extends Component {
 		return this.state.myAPIResponse;
 	}
 
-	checkSearchString = (courseNum) => {
-		return true;
-	}
-
 	updateSearchString = (newSearch) => {
 		this.setState({searchString: newSearch});
 	}
@@ -87,7 +81,6 @@ class App extends Component {
 					this.state.showCore ? 
 						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()}></Core>: null
 				}
-				<button onClick={()=>{console.log(this.state.myAPIResponse)}}>Backend</button>
 			</div>
 		);
 	}
