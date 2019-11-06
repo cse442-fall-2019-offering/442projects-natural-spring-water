@@ -60,11 +60,19 @@ class App extends Component {
 	}
 
 	getCourseResults = () => {
-		return this.state.myAPIResponse.slice(0, 12);
+		if(this.state.myAPIResponse.length == 0) {
+			return this.state.myAPIResponse;
+		}
+		
+		return this.state.myAPIResponse[0];
 	}
 	
 	getTopics = () => {	
-		return this.state.myAPIResponse.slice(12, 67);
+		if(this.state.myAPIResponse.length == 0) {
+			return this.state.myAPIResponse;
+		}
+		
+		return this.state.myAPIResponse[1];
 	}
 
 	updateSearchString = (newSearch) => {
@@ -89,6 +97,5 @@ class App extends Component {
 		);
 	}
 }
-
 
 export default App;

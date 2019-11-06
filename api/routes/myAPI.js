@@ -24,9 +24,11 @@ router.get("/", function(req, res, next) {
 			console.log(err);
 			res.send("NO VALUES");
 		}else{
+			var courses = [];
 			for (element of result){
-				my_result.push(element);
+				courses.push(element);
 			}
+			my_result.push(courses);
 		}
 	});
 	
@@ -35,9 +37,11 @@ router.get("/", function(req, res, next) {
 			console.log(err);
 			res.send("NO VALUES");
 		}else{
+			var topics = [];
 			for (element of result){
-				my_result.push(element);
+				topics.push(element);
 			}
+			my_result.push(topics);
 			res.send(my_result);
 		}
 	});
