@@ -27,6 +27,17 @@ router.get("/", function(req, res, next) {
 			for (element of result){
 				my_result.push(element);
 			}
+		}
+	});
+	
+	connection.query("SELECT * FROM topics", function (err, result, fields) {
+		if(err){
+			console.log(err);
+			res.send("NO VALUES");
+		}else{
+			for (element of result){
+				my_result.push(element);
+			}
 			res.send(my_result);
 		}
 	});

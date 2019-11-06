@@ -60,7 +60,11 @@ class App extends Component {
 	}
 
 	getCourseResults = () => {
-		return this.state.myAPIResponse;
+		return this.state.myAPIResponse.slice(0, 12);
+	}
+	
+	getTopics = () => {	
+		return this.state.myAPIResponse.slice(12, 67);
 	}
 
 	updateSearchString = (newSearch) => {
@@ -75,11 +79,11 @@ class App extends Component {
 			<div>
 				{ 
 					this.state.showLandingPage ?
-						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
 				}
 				{ 
 					this.state.showCore ? 
-						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()}></Core>: null
+						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()} topicList={this.getTopics()}></Core>: null
 				}
 			</div>
 		);
