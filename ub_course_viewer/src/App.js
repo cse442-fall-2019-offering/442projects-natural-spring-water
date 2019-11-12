@@ -49,22 +49,22 @@ class App extends Component {
 	}
 
 	setmyAPIResponse = (response) => {
-		this.setState({myAPIResponse: JSON.parse(response)});
+		var processed_response = response.replace(/\\/g, "");
+		processed_response = processed_response.replace(/\"{/g, "{");
+		processed_response = processed_response.replace(/}\"/g, "}");
+		this.setState({myAPIResponse: JSON.parse(processed_response)});
 	}
 
 	callAPI(my_callback) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				console.log("Non-JSON-Parsed: "+xhttp.responseText);
-				var processed_responseText = xhttp.responseText;
-				console.log("JSON-Parsed: "+JSON.parse(xhttp.responseText));
-				processed_responseText = processed_responseText.replace(/\\/g, "");
-				my_callback(processed_responseText);
+				//console.log("Non-JSON-Parsed: "+xhttp.responseText);
+				//console.log("JSON-Parsed: "+JSON.parse(xhttp.responseText));
+				my_callback(xhttp.responseText);
 			}
 		};
 		xhttp.open("GET", "https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/index_0.php", true);
-		xhttp.responseType = "text";
 		xhttp.send();
 	}
 

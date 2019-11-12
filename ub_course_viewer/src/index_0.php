@@ -15,7 +15,7 @@ if (!$conn) {
 $sql = "SELECT * FROM courses"; // testing statement
 $result = mysqli_query($conn, $sql);
 
-$course_data = [];
+$course_data = array();
 
 if (mysqli_num_rows($result) > 0) {
    	for ($i=0 ; $i<mysqli_num_rows($result) ; $i++) {
