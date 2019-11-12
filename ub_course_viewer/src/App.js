@@ -48,19 +48,28 @@ class App extends Component {
 		this.setState({graph_viewer: cart});
 	}
 
-	callAPI() {
-	    // fetch("http://localhost:9000/myAPI")
-	    //     .then(res => res.text())
-		// 	.then(res => this.setState({ myAPIResponse: JSON.parse(res) }));
-	const url = 'test.php';
-	axios.get(url).then(response => response.data).then((data) => {
-		console.log(data);
-	});
+	setmyAPIResponse = (response) => {
+		this.setState({myAPIResponse: JSON.parse(response)});
+	}
 
+	callAPI(my_callback) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log("Non-JSON-Parsed: "+xhttp.responseText);
+				var processed_responseText = xhttp.responseText;
+				console.log("JSON-Parsed: "+JSON.parse(xhttp.responseText));
+				processed_responseText = processed_responseText.replace(/\\/g, "");
+				my_callback(processed_responseText);
+			}
+		};
+		xhttp.open("GET", "https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/index_0.php", true);
+		xhttp.responseType = "text";
+		xhttp.send();
 	}
 
 	componentDidMount() {
-		this.callAPI();
+		this.callAPI(this.setmyAPIResponse);
 	}
 
 	getCourseResults = () => {
