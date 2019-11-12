@@ -3,7 +3,7 @@ import React, { Component} from 'react';
 import './App.css';
 import LandingPage from "./landingPage/LandingPage";
 import Core from "./core/Core"
-
+import axios from 'axios';
 // Currently the landing page that holds the Search and courseElement components
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
 		let cart = this.state.my_shopping_cart;
 		var index;
 		index = cart.indexOf(courseCode);
-		
+
 		console.log("App.js : remove_course() : index " + index)
 		if(index !== -1) {
 			cart.splice(index , 1);
@@ -47,16 +47,29 @@ class App extends Component {
 		let cart = this.state.my_shopping_cart;
 		this.setState({graph_viewer: cart});
 	}
-	
-	callAPI() {
-	    fetch("http://localhost:9000/myAPI")
-	        .then(res => res.text())
-			.then(res => this.setState({ myAPIResponse: JSON.parse(res) }));
-			
+
+	setmyAPIResponse = (response) => {
+		var processed_response = response.replace(/\\/g, "");
+		processed_response = processed_response.replace(/\"{/g, "{");
+		processed_response = processed_response.replace(/}\"/g, "}");
+		this.setState({myAPIResponse: JSON.parse(processed_response)});
 	}
 
-	componentWillMount() {
-		this.callAPI();
+	callAPI(my_callback) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				//console.log("Non-JSON-Parsed: "+xhttp.responseText);
+				//console.log("JSON-Parsed: "+JSON.parse(xhttp.responseText));
+				my_callback(xhttp.responseText);
+			}
+		};
+		xhttp.open("GET", "https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/index_0.php", true);
+		xhttp.send();
+	}
+
+	componentDidMount() {
+		this.callAPI(this.setmyAPIResponse);
 	}
 
 	getCourseResults = () => {
@@ -73,12 +86,12 @@ class App extends Component {
 	render() {
 		return(
 			<div>
-				{ 
+				{
 					this.state.showLandingPage ?
 						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
 				}
-				{ 
-					this.state.showCore ? 
+				{
+					this.state.showCore ?
 						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()}></Core>: null
 				}
 			</div>
