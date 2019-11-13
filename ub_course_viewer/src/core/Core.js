@@ -8,7 +8,8 @@ import '../../node_modules/vis-network/styles/vis-network.css';
 class Core extends Component{
   state = {
     rootCourse:{},
-    viewGraph:{}
+    viewGraph:{},
+	rootIndex: 0
   }
 
   createNode = (course) => {
@@ -16,6 +17,7 @@ class Core extends Component{
       name: course.code,
       children: this.findChildren(course)
     }
+	console.log(course);
     return newNode;
   }
 
@@ -28,26 +30,57 @@ class Core extends Component{
     });
     return my_children;
   }
+
+	findNodes = (courseList) => {
+		let nodeList = [];
+		for ( let index = 0; index < courseList.length; index++){
+			let newNode = {id:index+1, label: courseList[index].code, title: courseList[index].code};
+			nodeList.push(newNode);
+		}
+		return nodeList;
+	}
+
+	findRootIndex = (rootCourse, courseList) => {
+		for ( let index = 0; index < courseList.length; index++){
+			if(rootCourse.code==courseList[index].code) return index+1;
+		}
+		return 0;
+	}
+
+	checkCourses = (base, other) => {
+		for(let index = 0; index < base.associated_topics.length; index++){
+			if(other.associated_topics.includes(base.associated_topics[index])) return true;
+		}
+		return false;
+	}
+
+	findEdges = (rootCourse, courseList) => {
+		let edgeList = [];
+		if(rootCourse.code == undefined) return [];
+		let fromIndex = this.findRootIndex(rootCourse,courseList);
+		for (let index = 0; index < courseList.length; index++){
+			if(index+1 != fromIndex && this.checkCourses(rootCourse,courseList[index])){
+				let newEdge = {from:fromIndex, to:index+1};
+				edgeList.push(newEdge);
+			}
+		}
+		return edgeList;
+	}
+
+	createGraph = (rootCourse, courseList) => {
+		let graph = { nodes: this.findNodes(courseList), edges: this.findEdges(rootCourse,courseList) };
+		return graph;
+	}
+
   constructor(props){
     super(props);
-    this.state.rootCourse = this.props.selectedCourse;
+    this.setState({rootCourse: this.props.selectedCourse});
   }
   render = () =>{
     return (
       <div className="TreeDiv">
-        <Tree
-          data={this.createNode(this.props.selectedCourse)}
-          nodeRadius={15}
-          margins={{ top: 20, bottom: 10, left: 50, right: 200 }}
-          height={700}
-          width={1000}
-          textProps={{x:-25, y:25}}/>
-		
 		<Graph
-		  graph={{nodes: [{id: 1, label: "Test 1", title: "Test1"}, 
-						  {id: 2, label: "Test 2", title: "Test2"},
-						  ], 						  
-				  edges: [{from: 1, to: 2}]}}
+		  graph={this.createGraph(this.props.selectedCourse,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "500px"}}
 		  events={{select: function(event) {var { nodes, edges } = event}}}
 		  getNetwork={network => {

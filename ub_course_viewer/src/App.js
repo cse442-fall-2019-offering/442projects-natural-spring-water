@@ -57,14 +57,28 @@ class App extends Component {
 		return processed_response;
 	}
 
+	courseTopicsToIntArr = course => {
+		if(course.associated_topics==null) return [];
+		course.associated_topics = course.associated_topics.split(",").map(Number);
+		return course;
+	}
+
+	processTopicsInCourse = (courseList) => {
+		var temp_courses = courseList;
+		temp_courses = temp_courses.map(this.courseTopicsToIntArr);
+		return temp_courses;
+	}
+
 	setCourses = (response) => {
 		var processed_response = this.processResponse(response);
-		this.setState({courses: JSON.parse(processed_response)});
+		this.setState({courses: this.processTopicsInCourse(JSON.parse(processed_response))});
+//		this.setState({courses: this.processTopicsInCourse(this.state.courses)});
 	}
 
 	setTopics = (response) => {
 		var processed_response = this.processResponse(response);
 		this.setState({topics: JSON.parse(processed_response)});
+		console.log(this.state.topics[0]);
 	}
 
 	callAPI(my_callback, phpFile) {
