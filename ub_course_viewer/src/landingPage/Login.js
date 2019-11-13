@@ -79,7 +79,7 @@ class Login extends Component {
                             <Popover.Title>
 								<Button onClick={()=>{console.log("change password");}} variant="info" type="button">Change Password</Button>
 								<br />
-								<Button onClick={()=>{console.log("logout");}} variant="secondary" type="button">Log Out</Button>
+								<Button onClick={()=>{this.setState({isLoggedIn: false})}} variant="secondary" type="button">Log Out</Button>
                             </Popover.Title>
                         </Popover>
                     }
