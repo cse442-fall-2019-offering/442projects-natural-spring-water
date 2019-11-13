@@ -5,8 +5,6 @@ import Search from "./Search";
 import CourseElement from "./CourseElement"
 import Cart from "./Cart"
 
-// Currently the landing page that holds the Search and courseElement components
-
 function LandingPage(props) {
 	return(
         <div>

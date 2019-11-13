@@ -3,7 +3,6 @@ import React, { Component} from 'react';
 import './App.css';
 import LandingPage from "./landingPage/LandingPage";
 import Core from "./core/Core"
-import axios from 'axios';
 // Currently the landing page that holds the Search and courseElement components
 
 class App extends Component {
