@@ -12,9 +12,10 @@ class App extends Component {
 		showLandingPage: true,
 		showCore: true,
 		graph_viewer: [],
-		myAPIResponse: [],
+		courses: [],
 		searchString: "",
-		selectedCourse:{}
+		selectedCourse:{},
+		topics: []
 	}
 
 	add_course = (courseCode) => {
@@ -48,14 +49,25 @@ class App extends Component {
 		this.setState({graph_viewer: cart});
 	}
 
-	setmyAPIResponse = (response) => {
+	processResponse = (response) => {
 		var processed_response = response.replace(/\\/g, "");
-		processed_response = processed_response.replace(/\"{/g, "{");
-		processed_response = processed_response.replace(/}\"/g, "}");
-		this.setState({myAPIResponse: JSON.parse(processed_response)});
+                processed_response = processed_response.replace(/\"{/g, "{");
+                processed_response = processed_response.replace(/}\"/g, "}");
+		console.log(processed_response);
+		return processed_response;
 	}
 
-	callAPI(my_callback) {
+	setCourses = (response) => {
+		var processed_response = this.processResponse(response);
+		this.setState({courses: JSON.parse(processed_response)});
+	}
+	
+	setTopics = (response) => {
+		var processed_response = this.processResponse(response);
+		this.setState({topics: JSON.parse(processed_response)});
+	}
+
+	callAPI(my_callback, phpFile) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -64,16 +76,19 @@ class App extends Component {
 				my_callback(xhttp.responseText);
 			}
 		};
-		xhttp.open("GET", "https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/index_0.php", true);
+		xhttp.open("GET", "https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build2/"+phpFile , true);
 		xhttp.send();
 	}
 
-	componentDidMount() {
-		this.callAPI(this.setmyAPIResponse);
+	componentDidMount = () => {
+		this.callAPI(this.setCourses,"index_0.php");
+		this.callAPI(this.setTopics,"topics.php");
+		console.log(this.state.courses);
+		console.log(this.state.topics);
 	}
 
 	getCourseResults = () => {
-		return this.state.myAPIResponse;
+		return this.state.courses;
 	}
 
 	updateSearchString = (newSearch) => {
