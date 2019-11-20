@@ -67,7 +67,7 @@ class CourseElement extends Component {
 								</Accordion.Collapse>
 							</Card>
 						</Accordion>
-						<EditingModal show={this.state.showEditingModal} hideModal={this.hideEditingModal}></EditingModal>
+						<EditingModal show={this.state.showEditingModal} hideModal={this.hideEditingModal} name={this.props.name}></EditingModal>
 					</div>
 					:null
 				}
