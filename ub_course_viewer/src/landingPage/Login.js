@@ -8,9 +8,9 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 class Login extends Component {
 
-	state = {
-		isLoggedIn: false
-	}
+	//state = {
+	//	isLoggedIn: false
+	//}
 
 	constructor(props) {
 		super(props);
@@ -18,7 +18,8 @@ class Login extends Component {
 
 	finishLoginRequest = (result) => {
 		if(result === "Success"){
-			this.setState({isLoggedIn: true});
+			//this.setState({isLoggedIn: true});
+			this.props.changeLoginState(true);
 		}
 	}
 
@@ -44,7 +45,7 @@ class Login extends Component {
 		return (
 			<div>
 				{
-				(this.state.isLoggedIn === false) ?
+				(this.props.isLoggedIn === false) ?
 				<Form inline>
 					<OverlayTrigger placement="bottom" trigger="click" key="left"
 						overlay={
@@ -79,7 +80,7 @@ class Login extends Component {
                             <Popover.Title>
 								<Button onClick={()=>{console.log("change password");}} variant="info" type="button">Change Password</Button>
 								<br />
-								<Button onClick={()=>{this.setState({isLoggedIn: false})}} variant="secondary" type="button">Log Out</Button>
+								<Button onClick={()=>{this.props.changeLoginState(false)}} variant="secondary" type="button">Log Out</Button>
                             </Popover.Title>
                         </Popover>
                     }

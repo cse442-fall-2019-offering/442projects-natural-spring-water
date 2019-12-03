@@ -19,6 +19,12 @@ class CourseElement extends Component {
 		showEditingModal: false
 	}
 
+	showEditingModal = () => {
+		if(this.props.isLoggedIn === true){
+			this.setState({showEditingModal:true});
+		}
+	}
+
 	hideEditingModal = () => {
 		this.setState({showEditingModal: false});
 	}
@@ -57,7 +63,7 @@ class CourseElement extends Component {
 													<ButtonGroup>
 														<Button variant = "outline-primary" type="submit">Topics</Button>
 														<Button variant = "outline-primary" onClick={ ()=>{this.props.onAdd(this.props.name)} } type="button">Add</Button>
-														<Button variant = "outline-primary" onClick={ ()=>{this.setState({showEditingModal: true});} } type="button">Edit</Button>
+														<Button variant = "outline-primary" onClick={ ()=>{this.showEditingModal();} } type="button">Edit</Button>
 														<Button variant = "outline-primary" onClick={ ()=>{this.props.onOpen(this.props.courseObj)} } type="button">Open</Button>
 													</ButtonGroup>
 												</Row>
@@ -67,7 +73,7 @@ class CourseElement extends Component {
 								</Accordion.Collapse>
 							</Card>
 						</Accordion>
-						<EditingModal show={this.state.showEditingModal} hideModal={this.hideEditingModal} name={this.props.name}></EditingModal>
+						<EditingModal isLoggedIn={this.props.isLoggedIn} show={this.state.showEditingModal} hideModal={this.hideEditingModal} name={this.props.name}></EditingModal>
 					</div>
 					:null
 				}
