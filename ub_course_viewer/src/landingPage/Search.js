@@ -24,7 +24,7 @@ class Search extends Component {
 		return (
 			<div>
 				<Form inline id="courseSearchForm">
-						<Login></Login>
+						<Login isLoggedIn={this.props.loginState} changeLoginState={this.props.changeLoginState}></Login>
 						<Form.Label id="courseSearchLabel">Course Search</Form.Label>
 						<Form.Control type="course" placeholder="Enter Department and Course Number" onChange={event => this.onChangeSearchString(event.target.value)}/>
 						<Button variant="primary" type="button" id="courseSearchFormSubmitButton" onClick={()=>this.props.onSearch(this.state.searchString)} >Search</Button>
