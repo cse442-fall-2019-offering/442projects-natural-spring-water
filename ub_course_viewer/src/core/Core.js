@@ -12,29 +12,16 @@ class Core extends Component{
 	rootIndex: 0
   }
 
-  createNode = (course) => {
-    let newNode = {
-      name: course.code,
-      children: this.findChildren(course)
-    }
-	console.log(course);
-    return newNode;
-  }
-
-  findChildren = (parentCourse) => {
-    let my_children = [];
-    this.props.courseList.map((course) => {
-      if(course.associated_courses && course.associated_courses.indexOf(parentCourse.code) !== -1){
-        my_children.push(this.createNode(course));
-      }
-    });
-    return my_children;
-  }
-
-	findNodes = (courseList) => {
+	findNodes = (courseList,rootCourse) => {
 		let nodeList = [];
 		for ( let index = 0; index < courseList.length; index++){
-			let newNode = {id:index+1, label: courseList[index].code, title: courseList[index].code};
+			let newNode = {id:index+1, label: courseList[index].code, title: courseList[index].title};
+			nodeList.push(newNode);
+		}
+		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
+			console.log(this.props.topicList[index]);
+			var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+			let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]].topic_desc, title: rootCourse.title, color:randomColor};
 			nodeList.push(newNode);
 		}
 		return nodeList;
@@ -54,34 +41,63 @@ class Core extends Component{
 		return false;
 	}
 
+	findCode = (course) => {
+		return parseInt(course.code.split(" ")[1]);
+	}
+
 	findEdges = (rootCourse, courseList) => {
 		let edgeList = [];
+		let nodeList = [];
+		let nodeSet = [];
 		if(rootCourse.code == undefined) return [];
-		let fromIndex = this.findRootIndex(rootCourse,courseList);
-		for (let index = 0; index < courseList.length; index++){
-			if(index+1 != fromIndex && this.checkCourses(rootCourse,courseList[index])){
-				let newEdge = {from:fromIndex, to:index+1};
-				edgeList.push(newEdge);
+//		let fromIndex = this.findRootIndex(rootCourse,courseList);
+		let fromIndex = this.findCode(rootCourse);
+		for(let topicIndex = 0; topicIndex < rootCourse.associated_topics.length; topicIndex++){
+			for (let index = 0; index < courseList.length; index++){
+				if(courseList[index].associated_topics.includes(rootCourse.associated_topics[topicIndex])){
+					let courseCode = this.findCode(courseList[index]);
+					let newEdge = {from:courseCode, to:1000+rootCourse.associated_topics[topicIndex]};
+					if(!nodeSet.includes(courseCode)){
+						nodeSet.push(courseCode);
+						let newNode = {id:courseCode, label: courseList[index].code, title: courseList[index].title};
+						nodeList.push(newNode);
+					}
+					edgeList.push(newEdge);
+				}
 			}
 		}
-		return edgeList;
+		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
+                        console.log(this.props.topicList[index]);
+                        var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]].topic_desc, title: rootCourse.title, color:randomColor};
+                        nodeList.push(newNode);
+                }
+		return {nodes:nodeList,edges:edgeList};
 	}
 
 	createGraph = (rootCourse, courseList) => {
-		let graph = { nodes: this.findNodes(courseList), edges: this.findEdges(rootCourse,courseList) };
-		return graph;
+		try{
+//			let graph = { nodes: this.findNodes(courseList,rootCourse), edges: this.findEdges(rootCourse,courseList) };
+			let graph = this.findEdges(rootCourse,courseList);
+			return graph;
+		}
+		catch (e) {
+			console.log(e);
+		}
+		return {nodes:[], edges:[]};
 	}
 
   constructor(props){
     super(props);
     this.setState({rootCourse: this.props.selectedCourse});
   }
+
   render = () =>{
     return (
       <div className="TreeDiv">
 		<Graph
 		  graph={this.createGraph(this.props.selectedCourse,this.props.courseList)}
-		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "500px"}}
+		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}
 		  events={{select: function(event) {var { nodes, edges } = event}}}
 		  getNetwork={network => {
 			//  if you want access to vis.js network api you can set the state in a parent component using this property

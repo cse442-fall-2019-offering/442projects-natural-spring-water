@@ -10,7 +10,7 @@ class App extends Component {
 	state = {
 		my_shopping_cart: [],
 		showLandingPage: true,
-		showCore: true,
+		showCore: false,
 		graph_viewer: [],
 		courses: [],
 		searchString: "",
@@ -116,9 +116,16 @@ class App extends Component {
 	openCourse = (course) =>{
 		this.setState({selectedCourse:course});
 	}
+
+	togglePage = () =>{
+		console.log("Something happens")
+		this.setState({showLandingPage:(!this.state.showLandingPage), showCore:(!this.state.showCore)});
+	}
+
 	render() {
 		return(
 			<div>
+				<button onClick={this.togglePage}>Page Swap</button>
 				{
 					this.state.showLandingPage ?
 						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
