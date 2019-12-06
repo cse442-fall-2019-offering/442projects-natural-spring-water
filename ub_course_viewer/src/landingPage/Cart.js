@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class Cart extends Component {
 	render(){
@@ -15,7 +17,7 @@ class Cart extends Component {
 						<Popover.Title>
 							<ul className="list-group" id="my_ui_cart_id">
 								{this.getCart().map(course => {
-									return <li id={course} class="list-group-item" onClick={() => {this.onRemove(course)}}>{course}</li>
+									return <Row noGutters = "true"> <Col xs = {10}> <li id={course} class="list-group-item"> {course} </li> </Col> <Col> <Button style = {{height:"100%", width:"100%"}} variant = "danger" onClick={() => {this.onRemove(course)}}> X </Button>  </Col> </Row>
 								})}
 							</ul>
 						</Popover.Title>
