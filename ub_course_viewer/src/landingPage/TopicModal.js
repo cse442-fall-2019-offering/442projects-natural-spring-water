@@ -32,7 +32,7 @@ class TopicModal extends Component {
                                                 <Modal.Title>{this.props.course.code + " - " + this.props.course.title}</Modal.Title>
                                         </Modal.Header>
 
-                                        <Modal.Body>
+                                        <Modal.Body style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto'}}>
 						
                                                 Topics Related to This Course
 						<div>	
@@ -49,13 +49,9 @@ class TopicModal extends Component {
                                                                 <Accordion.Collapse eventKey="0">
                                                                         <Card.Body>
                                                                                 <Container>
-                                                                                        <Row>
-                                                                                                <Col sm={8}>Hello</Col>
-                                                                                                <Col sm={4}></Col>
-                                                                                        </Row>
-                                                                                        <p> </p>
-                                                                                </Container>
-                                                                        </Card.Body>
+											{topic["topic_info"]}
+                                                				</Container>  
+						                      </Card.Body>
                                                                 </Accordion.Collapse>
                                                         </Card>
                                                 </Accordion>
