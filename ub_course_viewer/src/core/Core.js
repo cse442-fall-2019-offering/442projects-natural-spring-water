@@ -7,6 +7,7 @@ import '../../node_modules/vis-network/styles/vis-network.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Container  from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import TopicViewer from './TopicViewer';
 
 
 const events = {
@@ -25,7 +26,8 @@ class Core extends Component{
     viewGraph:{},
 	rootIndex: 0,
 	edgeSet:[],
-	nodeSet:[]
+	nodeSet:[],
+	selectedTopics:[]
   }
 
 	findNodes = (courseList,rootCourse) => {
@@ -119,6 +121,20 @@ class Core extends Component{
 		return {nodes:[], edges:[]};
 	}
 
+
+	events = {
+		select: function(event) {
+			var { nodes, edges } = event;
+			console.log("Selected nodes:");
+			console.log(nodes);
+			console.log("Selected edges:");
+			console.log(edges);
+			for(let index=0;index<nodes.length;++index){
+			//Add functionality to load topic viewer to graph
+			}
+		}
+	};
+
   constructor(props){
     super(props);
     this.setState({rootCourse: this.props.selectedCourse});
@@ -137,11 +153,14 @@ class Core extends Component{
 		<Graph
 		  graph={this.createGraph(this.props.cart,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}
-		  events={events}
+		  events={this.events}
 		  getNetwork={network => {
 			//  if you want access to vis.js network api you can set the state in a parent component using this property
 		  }}
 		/>
+		{this.state.selectedTopics.map(topic => {
+			return <TopicViewer topic={topic}/>
+		})}
       </div>
       );
   }
