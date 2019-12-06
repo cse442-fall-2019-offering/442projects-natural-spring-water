@@ -54,7 +54,7 @@ class Search extends Component {
 						<Form.Label id="courseSearchLabel">Course Search</Form.Label>
 						<Form.Control type="course" placeholder="Enter Department and Course Number" onChange={event => this.onChangeSearchString(event.target.value)}/>
 						<Button variant="primary" type="button" id="courseSearchFormSubmitButton" onClick={()=>this.props.onSearch(this.state.searchString)} >Search</Button>
-						<Cart cart={this.props.cart} onRemove={this.props.onRemove}></Cart>
+						<Cart cart={this.props.cart} onRemove={this.props.onRemove} openCart={this.props.openCart}></Cart>
 					</Form.Group>
 					
 				</Form>

@@ -18,26 +18,29 @@ class App extends Component {
 		topics: []
 	}
 
-	add_course = (courseCode) => {
+	add_course = (courseCode,course) => {
 		//triple equals because console wouldnt shut the fuck up about it
 		let cart = this.state.my_shopping_cart;
+		let graph_courses = this.state.graph_viewer;
 		if(cart.indexOf(courseCode) === -1){
 			cart.push(courseCode);
+			graph_courses.push(course);
 		}
-		this.setState({my_shopping_cart: cart});
+		this.setState({my_shopping_cart: cart, graph_viewer: graph_courses});
 	}
 
 	remove_course = (courseCode) => {
 		let cart = this.state.my_shopping_cart;
+		let graph_courses = this.state.graph_viewer;
 		var index;
 		index = cart.indexOf(courseCode);
-
 		console.log("App.js : remove_course() : index " + index)
 		if(index !== -1) {
 			cart.splice(index , 1);
+			graph_courses.splice(index, 1);
 			console.log("App.js : remove_course() : Removed")
 		}
-		this.setState({my_shopping_cart: cart})
+		this.setState({my_shopping_cart: cart, graph_viewer: graph_courses})
 	}
 
 	getCart = () => {
@@ -46,7 +49,26 @@ class App extends Component {
 
 	openGraph = () => {
 		let cart = this.state.my_shopping_cart;
-		this.setState({graph_viewer: cart});
+		let graphCourses = [];
+		for(let index =0; index < cart.length; ++index) {
+			graphCourses.push(this.findCourse(cart[index]));
+		}
+		this.setState({graph_viewer:graphCourses});
+	}
+
+	findCourse = (courseCode) => {
+		let courseList = this.state.courses;
+		for(let index=0;index<courseList.length;++index){
+			if(courseCode == courseList[index].code){
+				return courseList[index];
+			}
+		}
+		return courseList[0];
+	}
+
+	openCart = () => {
+		//Should redirect to graph page
+		return 0;
 	}
 
 	processResponse = (response) => {
@@ -113,8 +135,14 @@ class App extends Component {
 		this.setState({searchString: newSearch});
 	}
 
+	checkCart = (courseCode) => {
+		return (this.my_shopping_cart.indexOf(courseCode) === -1);
+	}
+
 	openCourse = (course) =>{
-		this.setState({selectedCourse:course});
+//		this.setState({selectedCourse:course});
+		this.add_course(course.code+" - "+course.title ,course);
+		//this.openGraph();
 	}
 
 	togglePage = () =>{
@@ -128,12 +156,12 @@ class App extends Component {
 				<button onClick={this.togglePage}>Page Swap</button>
 				{
 					this.state.showLandingPage ?
-						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse}></LandingPage> : null
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse} openCart={this.openCart}></LandingPage> : null
 				}
 
 				{
 					this.state.showCore ?
-						<Core cart={this.state.my_shopping_cart} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()} topicList={this.getTopics()}></Core>: null
+						<Core cart={this.state.graph_viewer} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()} topicList={this.getTopics()}></Core>: null
 				}
 			</div>
 		);

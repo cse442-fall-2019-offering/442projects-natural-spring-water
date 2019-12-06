@@ -9,7 +9,9 @@ class Core extends Component{
   state = {
     rootCourse:{},
     viewGraph:{},
-	rootIndex: 0
+	rootIndex: 0,
+	edgeSet:[],
+	nodeSet:[]
   }
 
 	findNodes = (courseList,rootCourse) => {
@@ -45,20 +47,22 @@ class Core extends Component{
 		return parseInt(course.code.split(" ")[1]);
 	}
 
-	findEdges = (rootCourse, courseList) => {
+	findEdges = (rootCourse, courseList, tempSet) => {
 		let edgeList = [];
 		let nodeList = [];
-		let nodeSet = [];
+		let nodeSetTemp = tempSet.nodeSet;
+		let edgeSetTemp = tempSet.edgeSet;
 		if(rootCourse.code == undefined) return [];
 //		let fromIndex = this.findRootIndex(rootCourse,courseList);
 		let fromIndex = this.findCode(rootCourse);
 		for(let topicIndex = 0; topicIndex < rootCourse.associated_topics.length; topicIndex++){
 			for (let index = 0; index < courseList.length; index++){
-				if(courseList[index].associated_topics.includes(rootCourse.associated_topics[topicIndex])){
+				if(courseList[index].associated_topics.includes(rootCourse.associated_topics[topicIndex])&& !edgeSetTemp.includes(rootCourse.associated_topics[topicIndex])){
+					//edgeSetTemp.push(rootCourse.associated_topics[topicIndex]);
 					let courseCode = this.findCode(courseList[index]);
 					let newEdge = {from:courseCode, to:1000+rootCourse.associated_topics[topicIndex]};
-					if(!nodeSet.includes(courseCode)){
-						nodeSet.push(courseCode);
+					if(!nodeSetTemp.includes(courseCode)){
+						nodeSetTemp.push(courseCode);
 						let newNode = {id:courseCode, label: courseList[index].code, title: courseList[index].title};
 						nodeList.push(newNode);
 					}
@@ -68,19 +72,31 @@ class Core extends Component{
 		}
 		console.log(rootCourse.associated_topics);
 		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
-			console.log(rootCourse.associated_topics[index]);
-                        console.log(this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc);
-                        var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc, title: rootCourse.title, color:randomColor};
-                        nodeList.push(newNode);
+			let topicNodeID = 1000 + rootCourse.associated_topics[index];
+			if(!nodeSetTemp.includes(topicNodeID)) {
+				console.log(rootCourse.associated_topics[index]);
+        	                console.log(this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc);
+                	        var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+	                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc, title: rootCourse.title, color:randomColor};
+	                        nodeList.push(newNode);
+				nodeSetTemp.push(topicNodeID);
+				edgeSetTemp.push(topicNodeID-1000);
+			}
                 }
-		return {nodes:nodeList,edges:edgeList};
+//		this.setState({edgeSet:edgeSetTemp,nodeSet:nodeSetTemp});
+		return {nodes:nodeList,edges:edgeList,edgeSet:edgeSetTemp,nodeSet:nodeSetTemp};
 	}
 
-	createGraph = (rootCourse, courseList) => {
+	createGraph = (rootCourses, courseList) => {
+		let tempSet = {edgeSet:[],nodeSet:[]};
 		try{
-//			let graph = { nodes: this.findNodes(courseList,rootCourse), edges: this.findEdges(rootCourse,courseList) };
-			let graph = this.findEdges(rootCourse,courseList);
+			let graph = { nodes:[], edges:[] };
+			for ( let index = 0; index < rootCourses.length; ++index){
+				let tempGraph = this.findEdges(rootCourses[index],courseList,tempSet);
+				graph = {nodes:graph.nodes.concat(tempGraph.nodes), edges:graph.edges.concat(tempGraph.edges)};
+				tempSet = {edgeSet:tempGraph.edgeSet, nodeSet:tempGraph.nodeSet};
+			}
+//			let graph = {nodes:tempSet.nodes,edges:tempSet.edges};
 			return graph;
 		}
 		catch (e) {
@@ -98,7 +114,7 @@ class Core extends Component{
     return (
       <div className="TreeDiv">
 		<Graph
-		  graph={this.createGraph(this.props.selectedCourse,this.props.courseList)}
+		  graph={this.createGraph(this.props.cart,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}
 		  events={{select: function(event) {var { nodes, edges } = event}}}
 		  getNetwork={network => {

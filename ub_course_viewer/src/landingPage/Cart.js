@@ -20,7 +20,7 @@ class Cart extends Component {
 							</ul>
 						</Popover.Title>
 						<Popover.Content>
-							<Button variant="primary" type="submit">
+							<Button variant="primary" onClick={() => {this.props.openCart()}}>
 								Open
 							</Button>
 						</Popover.Content>

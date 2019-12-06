@@ -44,7 +44,7 @@ class CourseElement extends Component {
 												<Row style={{marginBottom: 1}}>
 													<ButtonGroup>
 														<Button variant = "outline-primary" type="submit">Topics</Button>
-														<Button variant = "outline-primary" onClick={ ()=>{this.props.onAdd(this.props.name)} } type="button">Add</Button>
+														<Button variant = "outline-primary" onClick={ ()=>{this.props.onAdd(this.props.name,this.props.courseObj)} } type="button">Add</Button>
 														<Button variant = "outline-primary" type="submit">Edit</Button>
 														<Button variant = "outline-primary" onClick={ ()=>{this.props.onOpen(this.props.courseObj)} } type="button">Open</Button>
 													</ButtonGroup>
