@@ -8,6 +8,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container  from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
+
+const events = {
+  select: function(event) {
+    var { nodes, edges } = event;
+    console.log("Selected nodes:");
+    console.log(nodes);
+    console.log("Selected edges:");
+    console.log(edges);
+  }
+};
+
 class Core extends Component{
   state = {
     rootCourse:{},
@@ -126,7 +137,7 @@ class Core extends Component{
 		<Graph
 		  graph={this.createGraph(this.props.cart,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}
-		  events={{select: function(event) {var { nodes, edges } = event}}}
+		  events={events}
 		  getNetwork={network => {
 			//  if you want access to vis.js network api you can set the state in a parent component using this property
 		  }}
