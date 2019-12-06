@@ -4,6 +4,9 @@ import '../App.css';
 import Tree from 'react-tree-graph';
 import Graph from 'react-graph-vis';
 import '../../node_modules/vis-network/styles/vis-network.css';
+import Navbar from 'react-bootstrap/Navbar';
+import Container  from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
 
 class Core extends Component{
   state = {
@@ -113,6 +116,13 @@ class Core extends Component{
   render = () =>{
     return (
       <div className="TreeDiv">
+
+		<Navbar expand="lg" variant="dark" bg="primary">
+			<Nav className="mr-auto">
+				<Nav.Link onClick={this.props.onToggle}>Home</Nav.Link>
+			</Nav>
+		</Navbar>
+
 		<Graph
 		  graph={this.createGraph(this.props.cart,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}

@@ -143,6 +143,7 @@ class App extends Component {
 //		this.setState({selectedCourse:course});
 		this.add_course(course.code+" - "+course.title ,course);
 		//this.openGraph();
+		this.togglePage();
 	}
 
 	togglePage = () =>{
@@ -153,15 +154,14 @@ class App extends Component {
 	render() {
 		return(
 			<div>
-				<button onClick={this.togglePage}>Page Swap</button>
 				{
 					this.state.showLandingPage ?
-						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse} openCart={this.openCart}></LandingPage> : null
+						<LandingPage onSearch={this.updateSearchString} onAdd={this.add_course} cart={this.getCart} onRemove={this.remove_course} courses={this.getCourseResults()} topics={this.getTopics()} searchString={this.state.searchString} onOpen={this.openCourse} openCart={this.openCart} onToggle={this.togglePage}></LandingPage> : null
 				}
 
 				{
 					this.state.showCore ?
-						<Core cart={this.state.graph_viewer} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()} topicList={this.getTopics()}></Core>: null
+						<Core cart={this.state.graph_viewer} selectedCourse={this.state.selectedCourse} courseList={this.getCourseResults()} topicList={this.getTopics()} onToggle={this.togglePage}></Core>: null
 				}
 			</div>
 		);
