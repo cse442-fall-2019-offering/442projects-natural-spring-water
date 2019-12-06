@@ -4,6 +4,13 @@ import '../App.css';
 import Tree from 'react-tree-graph';
 import Graph from 'react-graph-vis';
 import '../../node_modules/vis-network/styles/vis-network.css';
+import Navbar from 'react-bootstrap/Navbar';
+import Container  from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import TopicViewer from './TopicViewer';
+
+
+const TOPIC_SHIFT = 1000;
 
 class Core extends Component{
   state = {
@@ -11,7 +18,8 @@ class Core extends Component{
     viewGraph:{},
 	rootIndex: 0,
 	edgeSet:[],
-	nodeSet:[]
+	nodeSet:[],
+	selectedTopics:[]
   }
 
 	findNodes = (courseList,rootCourse) => {
@@ -23,7 +31,7 @@ class Core extends Component{
 		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
 			console.log(this.props.topicList[index]);
 			var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-			let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]].topic_desc, title: rootCourse.title, color:randomColor};
+			let newNode = {id:TOPIC_SHIFT+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]].topic_desc, title: rootCourse.title, color:randomColor};
 			nodeList.push(newNode);
 		}
 		return nodeList;
@@ -60,7 +68,7 @@ class Core extends Component{
 				if(courseList[index].associated_topics.includes(rootCourse.associated_topics[topicIndex])&& !edgeSetTemp.includes(rootCourse.associated_topics[topicIndex])){
 					//edgeSetTemp.push(rootCourse.associated_topics[topicIndex]);
 					let courseCode = this.findCode(courseList[index]);
-					let newEdge = {from:courseCode, to:1000+rootCourse.associated_topics[topicIndex]};
+					let newEdge = {from:courseCode, to:TOPIC_SHIFT+rootCourse.associated_topics[topicIndex]};
 					if(!nodeSetTemp.includes(courseCode)){
 						nodeSetTemp.push(courseCode);
 						let newNode = {id:courseCode, label: courseList[index].code, title: courseList[index].title};
@@ -72,15 +80,15 @@ class Core extends Component{
 		}
 		console.log(rootCourse.associated_topics);
 		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
-			let topicNodeID = 1000 + rootCourse.associated_topics[index];
+			let topicNodeID = TOPIC_SHIFT + rootCourse.associated_topics[index];
 			if(!nodeSetTemp.includes(topicNodeID)) {
 				console.log(rootCourse.associated_topics[index]);
         	                console.log(this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc);
                 	        var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-	                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc, title: rootCourse.title, color:randomColor};
+	                        let newNode = {id:TOPIC_SHIFT+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc, title: rootCourse.title, color:randomColor};
 	                        nodeList.push(newNode);
 				nodeSetTemp.push(topicNodeID);
-				edgeSetTemp.push(topicNodeID-1000);
+				edgeSetTemp.push(topicNodeID-TOPIC_SHIFT);
 			}
                 }
 //		this.setState({edgeSet:edgeSetTemp,nodeSet:nodeSetTemp});
@@ -105,6 +113,28 @@ class Core extends Component{
 		return {nodes:[], edges:[]};
 	}
 
+	
+	selectNode = (event) => {
+			var { nodes, edges } = event;
+                        console.log("Selected nodes:");
+                        console.log(nodes);
+                        console.log("Selected edges:");
+                        console.log(edges);
+                        let topics = [];
+                        for(let index=0;index<nodes.length;++index){
+                        //Add functionality to load topic viewer to graph
+                                if(nodes[index]>TOPIC_SHIFT){
+                                        topics.push(this.props.topicList[nodes[index]-TOPIC_SHIFT-1]);
+                                }
+                        }
+                        this.setState({selectedTopics:topics});
+
+}
+
+	events = {
+		select: this.selectNode
+	};
+
   constructor(props){
     super(props);
     this.setState({rootCourse: this.props.selectedCourse});
@@ -113,14 +143,24 @@ class Core extends Component{
   render = () =>{
     return (
       <div className="TreeDiv">
+
+		<Navbar expand="lg" variant="dark" bg="primary">
+			<Nav className="mr-auto">
+				<Nav.Link onClick={this.props.onToggle}>Home</Nav.Link>
+			</Nav>
+		</Navbar>
+
 		<Graph
 		  graph={this.createGraph(this.props.cart,this.props.courseList)}
 		  options={{layout: {hierarchical: false}, edges: {color: "#000000"}, height: "750px"}}
-		  events={{select: function(event) {var { nodes, edges } = event}}}
+		  events={this.events}
 		  getNetwork={network => {
 			//  if you want access to vis.js network api you can set the state in a parent component using this property
 		  }}
 		/>
+		{this.state.selectedTopics.map(topic => {
+			return <TopicViewer topic={topic}/>
+		})}
       </div>
       );
   }

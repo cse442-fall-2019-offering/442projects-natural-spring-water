@@ -43,7 +43,7 @@ class Search extends Component {
 						</Col>
 
 						<Col lg={2} xl={2}>
-						<Cart cart={this.props.cart} onRemove={this.props.onRemove} openCart={this.props.openCart}></Cart>
+						<Cart cart={this.props.cart} onRemove={this.props.onRemove} openCart={this.props.openCart} onToggle={this.props.onToggle}></Cart>
 						</Col>
 				</Row>
 			</div>

@@ -22,7 +22,7 @@ class Cart extends Component {
 							</ul>
 						</Popover.Title>
 						<Popover.Content>
-							<Button variant="primary" onClick={() => {this.props.openCart()}}>
+							<Button variant="primary" onClick={() => {this.props.onToggle()}}>
 								Open
 							</Button>
 						</Popover.Content>
