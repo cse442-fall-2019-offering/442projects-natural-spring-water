@@ -22,11 +22,11 @@ class CourseElement extends Component {
 	}
 	render(){
 		return(
-			<div>
+			<div id="courseElement">
 				{
 					this.compareSearchStrings(this.props.searchString, this.props.name) ? 
 					<div>
-						<Accordion defaultActiveKey="0">
+						<Accordion>
 							<Card>
 								<Accordion.Toggle as={Card.Header} eventKey="0">
 									{this.props.name}
