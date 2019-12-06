@@ -66,10 +66,12 @@ class Core extends Component{
 				}
 			}
 		}
+		console.log(rootCourse.associated_topics);
 		for ( let index = 0; index < rootCourse.associated_topics.length; index++){
-                        console.log(this.props.topicList[index]);
+			console.log(rootCourse.associated_topics[index]);
+                        console.log(this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc);
                         var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]].topic_desc, title: rootCourse.title, color:randomColor};
+                        let newNode = {id:1000+rootCourse.associated_topics[index], label:this.props.topicList[rootCourse.associated_topics[index]-1].topic_desc, title: rootCourse.title, color:randomColor};
                         nodeList.push(newNode);
                 }
 		return {nodes:nodeList,edges:edgeList};
