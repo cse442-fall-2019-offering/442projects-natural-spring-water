@@ -24,7 +24,7 @@ class LandingPage extends Component{
 				<Search loginState={this.state.isLoggedIn} changeLoginState={this.changeLoginState} onSearch={this.props.onSearch} cart={this.props.cart} onRemove={this.props.onRemove}></Search>
 
 				{this.props.courses.map(course => {
-					return <CourseElement isLoggedIn={this.state.isLoggedIn} name={course.code+" - "+course.title} summary={course.summary} onAdd={this.props.onAdd} searchString={this.props.searchString} courseObj={course} onOpen={this.props.onOpen} />
+					return <CourseElement isLoggedIn={this.state.isLoggedIn} topics={this.props.topics} name={course.code+" - "+course.title} summary={course.summary} onAdd={this.props.onAdd} searchString={this.props.searchString} courseObj={course} onOpen={this.props.onOpen} />
 				})}
 			</>
 		);
