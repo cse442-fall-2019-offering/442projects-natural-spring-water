@@ -47,7 +47,7 @@ class Login extends Component {
 				{
 				(this.props.isLoggedIn === false) ?
 				<Form inline>
-					<OverlayTrigger placement="bottom" trigger="click" key="left"
+					<OverlayTrigger placement="bottom" trigger="click"
 						overlay={
 							<Popover id={"popover-positioned-bottom"}>
 								<Popover.Title>
@@ -74,7 +74,7 @@ class Login extends Component {
 					</OverlayTrigger>
 				</Form>
 				:
-                <OverlayTrigger placement="bottom" trigger="click" key="left"
+                <OverlayTrigger placement="bottom" trigger="click"
                     overlay={
                         <Popover id={"popover-positioned-bottom"}>
                             <Popover.Title>

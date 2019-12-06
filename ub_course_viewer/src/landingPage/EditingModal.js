@@ -4,13 +4,17 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import EditingModalTopicElement from './EditingModalTopicElement';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Form from 'react-bootstrap/Form';
 
 class EditingModal extends Component{
 
 	state = {
 		topics: [],
 		associated_topics: [],
-		editing_cart: []
+		editing_cart: [],
+		new_topic_cart: []
 	}
 
 	constructor(props){
@@ -75,21 +79,57 @@ class EditingModal extends Component{
 	}
 
 	updateTopics = () => {
+		if(this.props.isLoggedIn===true){
+
+		var num_new_topics = this.state.new_topic_cart.length;
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", 'https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/update-topics.php', true);
         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.onreadystatechange = function() {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-				console.log("update result: " + xhttp.responseText);
+				console.log(xhttp.responseText);
                 if(xhttp.responseText === "success"){
-					window.location.reload(true);
-				}
+					if(num_new_topics === 0){
+                    	window.location.reload(true);
+					}
+                }
             }
         }
         var code = this.props.name.substring(0, 7);
-		console.log("code: " + code);
-		console.log("associated: " + this.state.editing_cart.join(","));
         xhttp.send("code=" + code + "&" + "associated=" + this.state.editing_cart.join(","));
+
+		var len = this.state.topics.length;
+		this.state.new_topic_cart.forEach(function(topicName, index, arr){
+			var add_topic_xhttp = new XMLHttpRequest();
+			add_topic_xhttp.open("POST", 'https://www-student.cse.buffalo.edu/CSE442-542/2019-Fall/cse-442n/build/add-topic.php', true);
+			add_topic_xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			add_topic_xhttp.onreadystatechange = function() {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					if(add_topic_xhttp.responseText === "success"){
+						if(index === arr.length-1){
+							window.location.reload(true);
+						}else{
+							setTimeout(function(){}, 10);
+						}
+					}
+				}
+			}
+			add_topic_xhttp.send("id="+ (len+index+1)+ "&" +"topic=" + topicName);
+		});
+
+		//close if
+		}
+	}
+
+	addTopic = () => {
+		var topicName = prompt("Enter a Topic Name");
+		if (topicName !== null){
+			var len = this.state.new_topic_cart.length;
+			if(this.state.new_topic_cart.includes(topicName) === false){
+				this.setState({new_topic_cart: this.state.new_topic_cart.concat(topicName)});
+				this.addToCart(this.state.topics.length + len + 1);
+			}
+		}
 	}
 
 	componentDidMount(){
@@ -123,6 +163,8 @@ class EditingModal extends Component{
 					</Modal.Body>
 
 					<Modal.Footer>
+						<Button variant="warning" onClick={this.addTopic}>Add a New Topic</Button>
+
 						<Button variant="secondary" onClick={this.props.hideModal}>
 							Close
 						</Button>
