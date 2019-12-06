@@ -6,6 +6,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Form from 'react-bootstrap/Form';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class TopicModal extends Component {
 
@@ -27,20 +32,34 @@ class TopicModal extends Component {
                                                 <Modal.Title>{this.props.course.code + " - " + this.props.course.title}</Modal.Title>
                                         </Modal.Header>
 
-                                        <Modal.Body>
-
+                                        <Modal.Body style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto'}}>
+						
                                                 Topics Related to This Course
-							
-						<ul>
+						<div>	
 							{
 								this.props.topics.map(topic => {
 									if (this.props.course["associated_topics"].indexOf(parseInt(topic["topic_id"], 10)) > -1) {
 										console.log(topic["topic_desc"]);
-										return <li> {topic["topic_desc"]} </li>
+										return <Accordion>
+                                                        <Card>
+                                                                <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {topic["topic_desc"]}
+                                                                        </Accordion.Toggle>
+
+                                                                <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                                <Container>
+											{topic["topic_info"]}
+                                                				</Container>  
+						                      </Card.Body>
+                                                                </Accordion.Collapse>
+                                                        </Card>
+                                                </Accordion>
+
 									}
 								})
 							}
-						</ul>
+						</div>
                                         </Modal.Body>
 
                                         <Modal.Footer>
