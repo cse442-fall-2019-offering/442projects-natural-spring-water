@@ -6,7 +6,7 @@ import Core from "./core/Core"
 // Currently the landing page that holds the Search and courseElement components
 
 class App extends Component {
-<<<<<<< HEAD
+
 	state = {
 		my_shopping_cart: [],
 		showLandingPage: true,
