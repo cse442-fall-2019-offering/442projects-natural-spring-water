@@ -4,9 +4,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import EditingModalTopicElement from './EditingModalTopicElement';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Form from 'react-bootstrap/Form';
 
 class EditingModal extends Component{
 
@@ -150,7 +147,7 @@ class EditingModal extends Component{
 						Select the Topics You'd Like to Add/Remove
 					</Modal.Body>
 
-					<Modal.Body>
+					<Modal.Body style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto'}} >
 						<ListGroup>
 							{this.state.topics.map(topic => {
 								if (this.state.associated_topics.indexOf(topic["topic_id"]) > -1){
