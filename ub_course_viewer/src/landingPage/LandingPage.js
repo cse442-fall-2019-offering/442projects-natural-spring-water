@@ -1,25 +1,34 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React,{Component} from 'react';
 import '../App.css';
 import Search from "./Search";
 import CourseElement from "./CourseElement"
 import Cart from "./Cart"
 
-// Currently the landing page that holds the Search and courseElement components
+class LandingPage extends Component{
+	state = {
+		isLoggedIn:false,
+	}
 
-function LandingPage(props) {
-	return(
-        <div>
+	constructor(props){
+		super(props);
+	}
 
-            <Search onSearch={props.onSearch} cart={props.cart} onRemove={props.onRemove} openCart={props.openCart}></Search>
-			
-            {props.courses.map(course => {
-                return <CourseElement name={course.code+" - "+course.title} summary={course.summary} onAdd={props.onAdd} searchString={props.searchString} courseObj={course} topics = {props.topics} onOpen={props.onOpen}/>
-            })}
+	changeLoginState = (my_bool) => {
+		this.setState({isLoggedIn: my_bool});
+	}
 
-            
-        </div>
-    );
+	render(){
+		return (
+			<>
+				<Search loginState={this.state.isLoggedIn} changeLoginState={this.changeLoginState} onSearch={this.props.onSearch} cart={this.props.cart} onRemove={this.props.onRemove}></Search>
+
+				{this.props.courses.map(course => {
+					return <CourseElement isLoggedIn={this.state.isLoggedIn} name={course.code+" - "+course.title} summary={course.summary} onAdd={this.props.onAdd} searchString={this.props.searchString} courseObj={course} onOpen={this.props.onOpen} />
+				})}
+			</>
+		);
+	}
 }
 
 export default LandingPage;

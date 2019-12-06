@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import TopicModal from './TopicModal';
+import EditingModal from './EditingModal';
 
 //CourseElement
 //props is the parameter that takes in values for the name of the class and class summary
@@ -17,15 +18,26 @@ import TopicModal from './TopicModal';
 class CourseElement extends Component {
 
 	state = {
-		showTopicModal: false
+		showTopicModal: false,
+		showEditingModal: false,
 	}
 
 	showTopicModal = () => {
 		this.setState({showTopicModal: true});
 	}
-	
+
 	hideTopicModal = () => {
 		this.setState({showTopicModal: false});
+	}
+
+	showEditingModal = () => {
+		if(this.props.isLoggedIn === true){
+			this.setState({showEditingModal:true});
+		}
+	}
+
+	hideEditingModal = () => {
+		this.setState({showEditingModal: false});
 	}
 
 	constructor(props){
@@ -35,12 +47,13 @@ class CourseElement extends Component {
 	compareSearchStrings = (userInput, courseTitle) => {
 		return (courseTitle.toLowerCase().indexOf(userInput.toLowerCase().trim()) === -1) ? false : true;
 	}
-	
+
 	render(){
 		return(
 			<div>
 				{
-					this.compareSearchStrings(this.props.searchString, this.props.name) ? 
+					this.compareSearchStrings(this.props.searchString, this.props.name) ?
+
 					<div>
 						<Accordion defaultActiveKey="0">
 							<Card>
@@ -61,7 +74,7 @@ class CourseElement extends Component {
 													<ButtonGroup>
 														<Button variant = "outline-primary" onClick = {() => {this.showTopicModal();} } type = "button"> Topics </Button>
 														<Button variant = "outline-primary" onClick={ ()=>{this.props.onAdd(this.props.name,this.props.courseObj)} } type="button">Add</Button>
-														<Button variant = "outline-primary" type="submit">Edit</Button>
+														<Button variant = "outline-primary" onClick={ ()=>{this.showEditingModal();} } type="button">Edit</Button>
 														<Button variant = "outline-primary" onClick={ ()=>{this.props.onOpen(this.props.courseObj)} } type="button">Open</Button>
 													</ButtonGroup>
 												</Row>
@@ -72,9 +85,10 @@ class CourseElement extends Component {
 							</Card>
 						</Accordion>
 						<TopicModal show = {this.state.showTopicModal} hideModal = {this.hideTopicModal} course = {this.props.courseObj} topics = {this.props.topics}> </TopicModal> 
-					</div>:null
+						<EditingModal isLoggedIn={this.props.isLoggedIn} show={this.state.showEditingModal} hideModal={this.hideEditingModal} name={this.props.name}></EditingModal>
+					</div>
+					:null
 				}
-				
 			</div>
 		);
 	}

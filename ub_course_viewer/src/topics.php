@@ -7,7 +7,7 @@ $dbname = "cse442_542_2019_fall_teamn_db";
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+	die("Connection failed: " . mysqli_connect_error());
 }
 
 //print("Connection Success\n");
