@@ -32,10 +32,10 @@ class Search extends Component {
 						</Col>
 
 						<Col>
-						<Form inline>
-						<Form.Label id="courseSearchLabel">Course Search</Form.Label>
-						<Form.Control style={{width:"80%"}} type="course" placeholder="Enter Department and Course Number" onChange={event => this.onChangeSearchString(event.target.value)}/>
-						</Form>
+							<Form inline onSubmit = {event => {event.preventDefault();}}>
+							<Form.Label column = "true" inline id="courseSearchLabel">Course Search</Form.Label>
+							<Form.Control inline style={{width:"80%"}} type="text" placeholder="Enter Department and Course Number" onChange={event => this.onChangeSearchString(event.target.value)} />		
+							</Form>
 						</Col>
 
 						<Col lg={1} xl={1}>
